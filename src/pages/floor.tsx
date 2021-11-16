@@ -39,7 +39,7 @@ const Floor: NextPage = () => {
   return (
     <main className="w-full p-1 md:p-0 md:container md:mx-auto">
       <header>
-        <h1 className="text-2xl font-bold tracking-wider text-indigo-400">
+        <h1 className="text-2xl font-bold tracking-wider text-indigo-400 uppercase">
           FLOOR TRACK
         </h1>
       </header>

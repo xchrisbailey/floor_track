@@ -9,7 +9,7 @@ export function calculateCollectionValue(collections: Collection[]): string {
     )
     .toFixed(2);
 
-  return value;
+  return `${value}Ξ`;
 }
 
 export function calculateCollectionSize(collections: Collection[]): number {
