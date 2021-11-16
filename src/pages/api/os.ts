@@ -1,21 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { Collection } from '../../types';
 
-type Data = {
-  data: Collection[];
-};
-
-export type Collection = {
-  description: string;
-  image_url: string;
-  name: string;
-  owned_asset_count: number;
-  slug: string;
-  stats: {
-    average_price: number;
-    floor_price: number;
-    one_day_volume: number;
-  };
-};
+interface Data {
+  collections: Collection[];
+}
 
 export default async function handler(
   req: NextApiRequest,
@@ -26,6 +14,7 @@ export default async function handler(
   const dres = await fetch(
     `https://api.opensea.io/api/v1/collections?asset_owner=${req.query.wallet}&offset=0&limit=300`
   );
+
   const data: Collection[] = await dres.json();
 
   const expData: Collection[] = await Promise.all(
@@ -48,5 +37,5 @@ export default async function handler(
     })
   );
 
-  res.status(200).json({ data: expData });
+  res.status(200).json({ collections: expData });
 }

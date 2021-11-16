@@ -1,22 +1,26 @@
+import { useState } from 'react';
+import Link from 'next/link';
 import type { NextPage } from 'next';
 
 const Home: NextPage = () => {
+  const [wallet, setWallet] = useState('');
+
   return (
-    <div className="grid place-items-center h-screen">
+    <div className="grid h-screen place-items-center">
       <div className="flex flex-col">
-        <h1 className="text-3xl font-bold tracking-wide mb-2">floor check</h1>
+        <h1 className="mb-2 text-3xl font-bold tracking-wide">floor check</h1>
         <div className="flex">
           <input
             type="text"
             placeholder="wallet address"
-            className="border p-2 rounded"
+            className="p-2 border rounded"
+            onChange={(e) => setWallet(e.target.value)}
           />
-          <a
-            href="#"
-            className="bg-blue-300 hover:bg-blue-400 shadow p-2 rounded ml-1"
-          >
-            view
-          </a>
+          <Link href={`/floor?wallet=${wallet}`}>
+            <a className="p-2 ml-1 bg-blue-300 rounded shadow hover:bg-blue-400">
+              view
+            </a>
+          </Link>
         </div>
       </div>
     </div>
