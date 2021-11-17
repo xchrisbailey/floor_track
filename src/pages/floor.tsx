@@ -40,7 +40,10 @@ const Floor: NextPage = () => {
   if (!data) {
     return (
       <main className="grid h-screen place-items-center">
-        <p>loading...</p>
+        <div
+          style={{ borderTopColor: 'transparent' }}
+          className="w-16 h-16 border-4 border-blue-400 border-solid rounded-full animate-spin"
+        ></div>
       </main>
     );
   }
@@ -63,10 +66,10 @@ const Floor: NextPage = () => {
                 {collection.name} ({collection.owned_asset_count})
               </div>
               <div className="p-2 bg-blue-300 rounded-l">
-                F: {collection.stats.floor_price}Ξ
+                F: {collection.stats.floor_price?.toFixed(2)}Ξ
               </div>
               <div className="p-2 bg-green-300">
-                1D: {collection.stats.one_day_volume}Ξ
+                1D: {collection.stats.one_day_volume?.toFixed(2)}Ξ
               </div>
             </article>
           ))}
@@ -106,7 +109,7 @@ const Floor: NextPage = () => {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                   >
-                    <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                    <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-50">
                       {sortOptions.map((sort, sortIdx) => (
                         <Listbox.Option
                           key={sortIdx}
