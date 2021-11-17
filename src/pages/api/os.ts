@@ -9,7 +9,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { wallet, sort } = req.query;
+  const { wallet, sort, vol, small } = req.query;
 
   if (!wallet) throw new Error('Must provide wallet');
 
@@ -19,7 +19,7 @@ export default async function handler(
 
   const data: Collection[] = await dres.json();
 
-  const expData: Collection[] = await Promise.all(
+  const filledData: Collection[] = await Promise.all(
     data.map(async (collection) => {
       const res = await fetch(
         `https://api.opensea.io/api/v1/collection/${collection.slug}/stats`
@@ -39,17 +39,25 @@ export default async function handler(
     })
   );
 
-  let sortedData;
+  let cleanedData = filledData;
+
+  if (small === 'true') {
+    cleanedData = cleanedData.filter((data) => data.stats.floor_price >= 0.01);
+  }
+
+  if (vol === 'true') {
+    cleanedData = cleanedData.filter((data) => data.stats.one_day_volume !== 0);
+  }
 
   if (sort === 'floor') {
-    sortedData = expData.sort((a, b) =>
+    cleanedData = cleanedData.sort((a, b) =>
       a.stats.floor_price < b.stats.floor_price ? 1 : -1
     );
   } else {
-    sortedData = expData.sort((a, b) =>
+    cleanedData = cleanedData.sort((a, b) =>
       a.stats.one_day_volume < b.stats.one_day_volume ? 1 : -1
     );
   }
 
-  res.status(200).json({ collections: sortedData });
+  res.status(200).json({ collections: cleanedData });
 }

@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/dist/client/router';
 import { Fragment, useState } from 'react';
 import useSWR from 'swr';
-import { Listbox, Transition } from '@headlessui/react';
+import { Listbox, Transition, Switch } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import {
   calculateCollectionSize,
@@ -18,9 +18,11 @@ const Floor: NextPage = () => {
   const { wallet } = router.query;
 
   const [isSortBy, setIsSortBy] = useState(sortOptions[0]);
+  const [isSmallHidden, setIsSmallHidden] = useState(false);
+  const [isVolHidden, setIsVolHidden] = useState(false);
 
   const { data, error } = useSWR<{ collections: Collection[] }>(
-    `/api/os?wallet=${wallet}&sort=${isSortBy.name}`,
+    `/api/os?wallet=${wallet}&sort=${isSortBy.name}&vol=${isVolHidden}&small=${isSmallHidden}`,
     fetcher
   );
 
@@ -54,23 +56,23 @@ const Floor: NextPage = () => {
         <section className="flex flex-col col-span-4">
           {data.collections.map((collection: Collection) => (
             <article
-              className="flex p-0 mb-2 overflow-hidden bg-gray-200 rounded"
+              className="flex p-0 mb-2 overflow-hidden bg-gray-200 rounded shadow"
               key={collection.slug}
             >
               <div className="flex-grow p-2">
                 {collection.name} ({collection.owned_asset_count})
               </div>
               <div className="p-2 bg-blue-300 rounded-l">
-                F: {collection.stats.floor_price.toFixed(2)}Ξ
+                F: {collection.stats.floor_price}Ξ
               </div>
               <div className="p-2 bg-green-300">
-                1D: {collection.stats.one_day_volume.toFixed(2)}Ξ
+                1D: {collection.stats.one_day_volume}Ξ
               </div>
             </article>
           ))}
         </section>
         <section className="col-span-2">
-          <article className="mb-2 overflow-hidden bg-gray-200 rounded">
+          <article className="mb-2 overflow-hidden bg-gray-200 rounded shadow">
             <h3 className="p-2 tracking-wide uppercase bg-purple-400 text-md">
               stats
             </h3>
@@ -81,7 +83,7 @@ const Floor: NextPage = () => {
               collection size: {calculateCollectionSize(data.collections)}
             </p>
           </article>
-          <article className="bg-gray-200 rounded">
+          <article className="bg-gray-200 rounded shadow">
             <h3 className="tracking-wide p-2 bg-yellow-400 uppercase text-md rounded-t">
               filters
             </h3>
@@ -148,6 +150,42 @@ const Floor: NextPage = () => {
                   </Transition>
                 </div>
               </Listbox>
+            </section>
+            <section className="p-2 flex items-center space-between">
+              <p className="pr-2 text-sm flex-grow">Hide small values</p>
+              <Switch
+                checked={isSmallHidden}
+                onChange={setIsSmallHidden}
+                className={`${
+                  isSmallHidden ? 'bg-pink-400' : 'bg-gray-300'
+                } relative inline-flex items-center h-6 rounded-full w-11`}
+              >
+                <span className="sr-only">Hide small floor values</span>
+                <span
+                  className={`${
+                    isSmallHidden ? 'translate-x-6' : 'translate-x-1'
+                  } inline-block w-4 h-4 transform bg-white rounded-full`}
+                />
+              </Switch>
+            </section>
+            <section className="p-2 flex items-center space-between">
+              <p className="pr-2 text-sm flex-grow">
+                Hide low volume collections
+              </p>
+              <Switch
+                checked={isVolHidden}
+                onChange={setIsVolHidden}
+                className={`${
+                  isVolHidden ? 'bg-purple-400' : 'bg-gray-300'
+                } relative inline-flex items-center h-6 rounded-full w-11`}
+              >
+                <span className="sr-only">Hide Small Floor Values</span>
+                <span
+                  className={`${
+                    isVolHidden ? 'translate-x-6' : 'translate-x-1'
+                  } inline-block w-4 h-4 transform bg-white rounded-full`}
+                />
+              </Switch>
             </section>
           </article>
         </section>
