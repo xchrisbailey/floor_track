@@ -60,7 +60,7 @@ const Floor: NextPage = () => {
               <div className="flex-grow p-2">
                 {collection.name} ({collection.owned_asset_count})
               </div>
-              <div className="p-2 bg-blue-300">
+              <div className="p-2 bg-blue-300 rounded-l">
                 F: {collection.stats.floor_price.toFixed(2)}Ξ
               </div>
               <div className="p-2 bg-green-300">
