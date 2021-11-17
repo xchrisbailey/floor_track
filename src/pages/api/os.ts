@@ -9,10 +9,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  if (!req.query.wallet) throw new Error('Must provide wallet');
+  const { wallet, sort } = req.query;
+
+  if (!wallet) throw new Error('Must provide wallet');
 
   const dres = await fetch(
-    `https://api.opensea.io/api/v1/collections?asset_owner=${req.query.wallet}&offset=0&limit=300`
+    `https://api.opensea.io/api/v1/collections?asset_owner=${wallet}&offset=0&limit=300`
   );
 
   const data: Collection[] = await dres.json();
@@ -37,5 +39,17 @@ export default async function handler(
     })
   );
 
-  res.status(200).json({ collections: expData });
+  let sortedData;
+
+  if (sort === 'floor') {
+    sortedData = expData.sort((a, b) =>
+      a.stats.floor_price < b.stats.floor_price ? 1 : -1
+    );
+  } else {
+    sortedData = expData.sort((a, b) =>
+      a.stats.one_day_volume < b.stats.one_day_volume ? 1 : -1
+    );
+  }
+
+  res.status(200).json({ collections: sortedData });
 }
