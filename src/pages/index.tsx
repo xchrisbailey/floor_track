@@ -6,14 +6,14 @@ const Home: NextPage = () => {
   const [wallet, setWallet] = useState('');
 
   return (
-    <div className="grid h-screen place-items-center">
+    <div className="grid place-items-center h-screen">
       <div className="flex flex-col">
         <h1 className="mb-2 text-3xl font-bold tracking-wide">floor check</h1>
         <div className="flex">
           <input
             type="text"
             placeholder="wallet address"
-            className="p-2 border rounded"
+            className="p-2 rounded border"
             onChange={(e) => setWallet(e.target.value)}
           />
           <Link href={`/floor?wallet=${wallet}`}>

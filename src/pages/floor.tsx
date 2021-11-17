@@ -28,7 +28,7 @@ const Floor: NextPage = () => {
 
   if (error) {
     return (
-      <main className="grid h-screen place-items-center">
+      <main className="grid place-items-center h-screen">
         <p>
           <span className="font-bold text-red-400 uppercase">error</span>:{' '}
           {error.message}
@@ -39,17 +39,17 @@ const Floor: NextPage = () => {
 
   if (!data) {
     return (
-      <main className="grid h-screen place-items-center">
+      <main className="grid place-items-center h-screen">
         <div
           style={{ borderTopColor: 'transparent' }}
-          className="w-16 h-16 border-4 border-blue-400 border-solid rounded-full animate-spin"
+          className="w-16 h-16 rounded-full border-4 border-blue-400 border-solid animate-spin"
         ></div>
       </main>
     );
   }
 
   return (
-    <main className="w-full p-1 md:p-0 md:container md:mx-auto">
+    <main className="p-1 w-full md:container md:p-0 md:mx-auto">
       <header>
         <h1 className="text-2xl font-bold tracking-wider text-indigo-400 uppercase">
           FLOOR TRACK
@@ -59,7 +59,7 @@ const Floor: NextPage = () => {
         <section className="flex flex-col col-span-4">
           {data.collections.map((collection: Collection) => (
             <article
-              className="flex p-0 mb-2 overflow-hidden bg-gray-200 rounded shadow"
+              className="flex overflow-hidden p-0 mb-2 bg-gray-200 rounded shadow"
               key={collection.slug}
             >
               <div className="flex-grow p-2">
@@ -75,7 +75,7 @@ const Floor: NextPage = () => {
           ))}
         </section>
         <section className="col-span-2">
-          <article className="mb-2 overflow-hidden bg-gray-200 rounded shadow">
+          <article className="overflow-hidden mb-2 bg-gray-200 rounded shadow">
             <h3 className="p-2 tracking-wide uppercase bg-purple-400 text-md">
               stats
             </h3>
@@ -87,16 +87,16 @@ const Floor: NextPage = () => {
             </p>
           </article>
           <article className="bg-gray-200 rounded shadow">
-            <h3 className="tracking-wide p-2 bg-yellow-400 uppercase text-md rounded-t">
+            <h3 className="p-2 tracking-wide uppercase bg-yellow-400 rounded-t text-md">
               filters
             </h3>
             <section className="p-2">
-              <p className="text-xs px-2 mt-1">sort by:</p>
+              <p className="px-2 mt-1 text-xs">sort by:</p>
               <Listbox value={isSortBy} onChange={setIsSortBy}>
                 <div className="relative mt-1 mb-2">
-                  <Listbox.Button className="relative w-full py-2 pl-3 pr-10 text-left bg-white rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm">
+                  <Listbox.Button className="relative py-2 pr-10 pl-3 w-full text-left bg-white rounded-lg shadow-md cursor-default sm:text-sm focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300">
                     <span className="block truncate">{isSortBy.name}</span>
-                    <span className="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
+                    <span className="flex absolute inset-y-0 right-0 items-center pr-2 pointer-events-none">
                       <SelectorIcon
                         className="w-5 h-5 text-gray-400"
                         aria-hidden="true"
@@ -109,7 +109,7 @@ const Floor: NextPage = () => {
                     leaveFrom="opacity-100"
                     leaveTo="opacity-0"
                   >
-                    <Listbox.Options className="absolute w-full py-1 mt-1 overflow-auto text-base bg-white rounded-md shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-50">
+                    <Listbox.Options className="overflow-auto absolute z-50 py-1 mt-1 w-full max-h-60 text-base bg-white rounded-md ring-1 ring-black ring-opacity-5 shadow-lg sm:text-sm focus:outline-none">
                       {sortOptions.map((sort, sortIdx) => (
                         <Listbox.Option
                           key={sortIdx}
@@ -154,8 +154,8 @@ const Floor: NextPage = () => {
                 </div>
               </Listbox>
             </section>
-            <section className="p-2 flex items-center space-between">
-              <p className="pr-2 text-sm flex-grow">Hide small values</p>
+            <section className="flex items-center p-2 space-between">
+              <p className="flex-grow pr-2 text-sm">Hide small values</p>
               <Switch
                 checked={isSmallHidden}
                 onChange={setIsSmallHidden}
@@ -171,8 +171,8 @@ const Floor: NextPage = () => {
                 />
               </Switch>
             </section>
-            <section className="p-2 flex items-center space-between">
-              <p className="pr-2 text-sm flex-grow">
+            <section className="flex items-center p-2 space-between">
+              <p className="flex-grow pr-2 text-sm">
                 Hide low volume collections
               </p>
               <Switch
@@ -196,5 +196,6 @@ const Floor: NextPage = () => {
     </main>
   );
 };
+
 
 export default Floor;
