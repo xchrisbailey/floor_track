@@ -65,11 +65,11 @@ const Floor: NextPage = () => {
               <div className="flex-grow p-2">
                 {collection.name} ({collection.owned_asset_count})
               </div>
-              <div className="p-2 bg-blue-300 rounded-l">
+              <div className="flex justify-center p-2 w-1/6 bg-blue-300 rounded-l">
                 F: {collection.stats.floor_price?.toFixed(2)}Ξ
               </div>
-              <div className="p-2 bg-green-300">
-                1D: {collection.stats.one_day_volume?.toFixed(2)}Ξ
+              <div className="flex justify-center p-2 w-1/6 bg-green-300">
+                1D/V: {collection.stats.one_day_volume?.toFixed(2)}Ξ
               </div>
             </article>
           ))}
@@ -88,7 +88,7 @@ const Floor: NextPage = () => {
           </article>
           <article className="bg-gray-200 rounded shadow">
             <h3 className="p-2 tracking-wide uppercase bg-yellow-400 rounded-t text-md">
-              filters
+              Modifiers
             </h3>
             <section className="p-2">
               <p className="px-2 mt-1 text-xs">sort by:</p>
