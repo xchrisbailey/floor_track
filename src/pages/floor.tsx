@@ -10,6 +10,7 @@ import {
 } from '../lib/collectionUtils';
 import { fetcher } from '../lib/fetcher';
 import { Collection } from '../types';
+import { CollectionCard } from '../components/Collection';
 
 const sortOptions = [{ name: 'floor' }, { name: 'vol' }];
 
@@ -19,10 +20,10 @@ const Floor: NextPage = () => {
 
   const [isSortBy, setIsSortBy] = useState(sortOptions[0]);
   const [isSmallHidden, setIsSmallHidden] = useState(false);
-  const [isVolHidden, setIsVolHidden] = useState(false);
+  const [isSmVolHidden, setIsSmVolHidden] = useState(false);
 
   const { data, error } = useSWR<{ collections: Collection[] }>(
-    `/api/os?wallet=${wallet}&sort=${isSortBy.name}&vol=${isVolHidden}&small=${isSmallHidden}`,
+    `/api/os?wallet=${wallet}&sort=${isSortBy.name}&vol=${isSmVolHidden}&small=${isSmallHidden}`,
     fetcher
   );
 
@@ -58,20 +59,7 @@ const Floor: NextPage = () => {
       <div className="grid grid-cols-1 gap-2 md:grid-cols-6">
         <section className="flex flex-col col-span-4">
           {data.collections.map((collection: Collection) => (
-            <article
-              className="flex overflow-hidden p-0 mb-2 bg-gray-200 rounded shadow"
-              key={collection.slug}
-            >
-              <div className="flex-grow p-2">
-                {collection.name} ({collection.owned_asset_count})
-              </div>
-              <div className="flex justify-center p-2 w-1/6 bg-blue-300 rounded-l">
-                F: {collection.stats.floor_price?.toFixed(2)}Ξ
-              </div>
-              <div className="flex justify-center p-2 w-1/6 bg-green-300">
-                1D/V: {collection.stats.one_day_volume?.toFixed(2)}Ξ
-              </div>
-            </article>
+            <CollectionCard collection={collection} key={collection.slug} />
           ))}
         </section>
         <section className="col-span-2">
@@ -90,7 +78,7 @@ const Floor: NextPage = () => {
             <h3 className="p-2 tracking-wide uppercase bg-yellow-400 rounded-t text-md">
               Modifiers
             </h3>
-            <section className="p-2">
+            <article className="p-2">
               <p className="px-2 mt-1 text-xs">sort by:</p>
               <Listbox value={isSortBy} onChange={setIsSortBy}>
                 <div className="relative mt-1 mb-2">
@@ -120,7 +108,7 @@ const Floor: NextPage = () => {
                                 ? 'text-amber-900 bg-amber-100'
                                 : 'text-gray-900'
                             }
-                          cursor-default select-none relative py-2 pl-10 pr-4`
+                    cursor-default select-none relative py-2 pl-10 pr-4`
                           }
                         >
                           {({ selected, active }) => (
@@ -137,7 +125,7 @@ const Floor: NextPage = () => {
                                   className={`${
                                     active ? 'text-amber-600' : 'text-amber-600'
                                   }
-                                absolute inset-y-0 left-0 flex items-center pl-3`}
+                            absolute inset-y-0 left-0 flex items-center pl-3`}
                                 >
                                   <CheckIcon
                                     className="w-5 h-5"
@@ -153,8 +141,8 @@ const Floor: NextPage = () => {
                   </Transition>
                 </div>
               </Listbox>
-            </section>
-            <section className="flex items-center p-2 space-between">
+            </article>
+            <article className="flex items-center p-2 space-between">
               <p className="flex-grow pr-2 text-sm">Hide small values</p>
               <Switch
                 checked={isSmallHidden}
@@ -170,26 +158,26 @@ const Floor: NextPage = () => {
                   } inline-block w-4 h-4 transform bg-white rounded-full`}
                 />
               </Switch>
-            </section>
-            <section className="flex items-center p-2 space-between">
+            </article>
+            <article className="flex items-center p-2 space-between">
               <p className="flex-grow pr-2 text-sm">
                 Hide low volume collections
               </p>
               <Switch
-                checked={isVolHidden}
-                onChange={setIsVolHidden}
+                checked={isSmVolHidden}
+                onChange={setIsSmVolHidden}
                 className={`${
-                  isVolHidden ? 'bg-purple-400' : 'bg-gray-300'
+                  isSmVolHidden ? 'bg-purple-400' : 'bg-gray-300'
                 } relative inline-flex items-center h-6 rounded-full w-11`}
               >
                 <span className="sr-only">Hide Small Floor Values</span>
                 <span
                   className={`${
-                    isVolHidden ? 'translate-x-6' : 'translate-x-1'
+                    isSmVolHidden ? 'translate-x-6' : 'translate-x-1'
                   } inline-block w-4 h-4 transform bg-white rounded-full`}
                 />
               </Switch>
-            </section>
+            </article>
           </article>
         </section>
       </div>
