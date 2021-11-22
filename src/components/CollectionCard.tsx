@@ -17,6 +17,7 @@ export const CollectionCard = ({ collection }: Props) => {
           {collection?.image_url && (
             <Image
               src={collection.image_url}
+              alt={`${collection.name} logo image`}
               height={30}
               width={30}
               className="rounded-full shadow-inner"
