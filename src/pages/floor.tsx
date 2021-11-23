@@ -11,7 +11,6 @@ import {
 import { fetcher } from '../lib/fetcher';
 import { Collection } from '../types';
 import { CollectionCard } from '../components/CollectionCard';
-import { SupportGroup } from '../components/SupportGroup';
 
 const sortOptions = [{ name: 'floor' }, { name: 'vol' }];
 
@@ -180,7 +179,6 @@ const Floor: NextPage = () => {
               </Switch>
             </article>
           </article>
-          <SupportGroup />
         </section>
       </div>
     </main>

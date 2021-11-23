@@ -3,7 +3,7 @@ import { Collection } from '../types';
 export function calculateCollectionValue(collections: Collection[]): string {
   const value: string = collections
     .reduce(
-      (sum, collection) =>
+      (sum, collection): number =>
         sum + collection.owned_asset_count * collection.stats.floor_price,
       0
     )
@@ -14,7 +14,7 @@ export function calculateCollectionValue(collections: Collection[]): string {
 
 export function calculateCollectionSize(collections: Collection[]): number {
   const size: number = collections.reduce(
-    (sum, col) => sum + col.owned_asset_count,
+    (sum, col): number => sum + col.owned_asset_count,
     0
   );
 
