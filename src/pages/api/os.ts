@@ -13,14 +13,14 @@ export default async function handler(
 
   if (!wallet) throw new Error('Must provide wallet');
 
-  const headers =
-    process.env.NODE_ENV === 'production'
-      ? [[`X-API-KEY: ${process.env.OS_API_KEY}`]]
-      : [];
+  const config: RequestInit = {
+    method: 'GET',
+    headers: { 'X-API-KEY': `${process.env.OS_API_KEY}` },
+  };
 
   const collectionResponse = await fetch(
     `https://api.opensea.io/api/v1/collections?asset_owner=${wallet}&offset=0&limit=300`,
-    { headers }
+    config
   );
 
   let collections: Collection[] = await collectionResponse.json();
