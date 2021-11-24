@@ -7,8 +7,12 @@ import { Collection } from '../types';
 import { CollectionCard } from '../components/CollectionCard';
 import { ModiferCard } from '../components/ModiferCard';
 import { WalletStatCard } from '../components/WalletStatCard';
+import tw from 'twin.macro';
 
 export const sortOptions = [{ name: 'floor' }, { name: 'vol' }];
+const Brand = tw.h1`text-5xl tracking-wider text-indigo-400 lowercase font-brand`;
+const Sidebar = tw.section`flex flex-col col-span-1 md:col-span-2`;
+const CollectionContainer = tw.section`flex flex-col col-span-4`;
 
 const Floor: NextPage = () => {
   const router = useRouter();
@@ -47,18 +51,16 @@ const Floor: NextPage = () => {
 
   return (
     <main className="p-1 w-full md:container md:p-0 md:mx-auto">
-      <header className="mt-2 mb-1">
-        <h1 className="text-5xl tracking-wider text-indigo-400 lowercase font-brand">
-          FLOOR TRACK
-        </h1>
+      <header className="mt-2 mb-3">
+        <Brand>FLOOR TRACK</Brand>
       </header>
       <div className="grid grid-cols-1 gap-2 md:grid-cols-6">
-        <section className="flex flex-col col-span-4">
+        <CollectionContainer>
           {data.collections.map((collection: Collection) => (
             <CollectionCard collection={collection} key={collection.slug} />
           ))}
-        </section>
-        <section className="flex flex-col col-span-1 md:col-span-2">
+        </CollectionContainer>
+        <Sidebar>
           <WalletStatCard collections={data.collections} />
           <ModiferCard
             isSmVolHidden={isSmVolHidden}
@@ -68,7 +70,7 @@ const Floor: NextPage = () => {
             setIsSmallHidden={setIsSmallHidden}
             setIsSortBy={setIsSortBy}
           />
-        </section>
+        </Sidebar>
       </div>
     </main>
   );
