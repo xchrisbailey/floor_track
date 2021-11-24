@@ -1,4 +1,5 @@
-import tw, { styled } from 'twin.macro';
+import tw from 'twin.macro';
+import styled from '@emotion/styled';
 
 interface CardHeaderProps {
   color: 'purple' | 'yellow';

@@ -7,12 +7,6 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "babelMacros": {
-    "twin": {
-      "preset": "styled-components",
-      "autoCssProp": false
-    }
-  },
   "dependencies": {
     "@emotion/css": "^11.5.0",
     "@emotion/react": "^11.6.0",
