@@ -25,7 +25,8 @@ export const CollectionCard = ({ collection }: Props) => {
           )}
           <a
             href={`https://opensea.io/collection/${collection.slug}`}
-            className="mx-2 text-blue-700 underline hover:text-blue-800 hover:no-underline"
+            target="_blank"
+            className="mx-2 text-blue-700 underline hover:text-blue-800 hover:no-underline" rel="noreferrer"
           >
             {collection.name}
           </a>{' '}
