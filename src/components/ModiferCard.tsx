@@ -1,8 +1,16 @@
-import { Listbox, Switch, Transition } from '@headlessui/react';
+import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { Dispatch, Fragment, SetStateAction } from 'react';
+import tw, { styled } from 'twin.macro';
 import { sortOptions } from '../pages/floor';
 import { CardBase, CardContent, CardHeader } from '../styles/Card';
+import {
+  Toggle,
+  ToggleAccess,
+  ToggleContainer,
+  ToggleLabel,
+  ToggleSlider,
+} from '../styles/Toggle';
 
 export const ModiferCard = (props: {
   isSortBy: {
@@ -90,40 +98,30 @@ export const ModiferCard = (props: {
             </div>
           </Listbox>
         </div>
-        <div className="flex items-center p-2 space-between">
-          <p className="flex-grow pr-2 text-sm">Hide small values</p>
-          <Switch
+        <ToggleContainer>
+          <ToggleLabel>Hide small values</ToggleLabel>
+          <Toggle
             checked={isSmallHidden}
             onChange={setIsSmallHidden}
-            className={`${
-              isSmallHidden ? 'bg-pink-400' : 'bg-gray-300'
-            } relative inline-flex items-center h-6 rounded-full w-11`}
+            color="pink"
           >
-            <span className="sr-only">Hide small floor values</span>
-            <span
-              className={`${
-                isSmallHidden ? 'translate-x-6' : 'translate-x-1'
-              } inline-block w-4 h-4 transform bg-white rounded-full`}
-            />
-          </Switch>
-        </div>
-        <div className="flex items-center p-2 space-between">
-          <p className="flex-grow pr-2 text-sm">Hide low volume collections</p>
-          <Switch
+            <ToggleAccess className="sr-only">
+              Hide small floor values
+            </ToggleAccess>
+            <ToggleSlider checked={isSmallHidden} />
+          </Toggle>
+        </ToggleContainer>
+        <ToggleContainer>
+          <ToggleLabel>Hide low volume collections</ToggleLabel>
+          <Toggle
+            color="purple"
             checked={isSmVolHidden}
             onChange={setIsSmVolHidden}
-            className={`${
-              isSmVolHidden ? 'bg-purple-400' : 'bg-gray-300'
-            } relative inline-flex items-center h-6 rounded-full w-11`}
           >
-            <span className="sr-only">Hide Small Floor Values</span>
-            <span
-              className={`${
-                isSmVolHidden ? 'translate-x-6' : 'translate-x-1'
-              } inline-block w-4 h-4 transform bg-white rounded-full`}
-            />
-          </Switch>
-        </div>
+            <ToggleAccess>Hide Small Floor Values</ToggleAccess>
+            <ToggleSlider checked={isSmVolHidden} />
+          </Toggle>
+        </ToggleContainer>
       </CardContent>
     </CardBase>
   );
