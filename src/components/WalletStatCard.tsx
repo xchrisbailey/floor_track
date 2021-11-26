@@ -11,8 +11,10 @@ export const WalletStatCard = ({
   collections: Collection[];
 }) => {
   return (
-    <CardBase>
-      <CardHeader color="purple">stats</CardHeader>
+    <CardBase type="info">
+      <CardHeader type="info" color="purple">
+        stats
+      </CardHeader>
       <CardContent>
         <p>collection value: {calculateCollectionValue(collections)}</p>
         <p>collection size: {calculateCollectionSize(collections)}</p>

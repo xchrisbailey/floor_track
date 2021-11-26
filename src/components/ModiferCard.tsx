@@ -31,8 +31,10 @@ export const ModiferCard = (props: {
     setIsSortBy,
   } = props;
   return (
-    <CardBase>
-      <CardHeader color="yellow">Modifiers</CardHeader>
+    <CardBase type="info">
+      <CardHeader color="yellow" type="info">
+        Modifiers
+      </CardHeader>
       <CardContent>
         <div>
           <p className="px-2 mt-1 text-xs">sort by:</p>
