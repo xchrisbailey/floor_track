@@ -2,17 +2,14 @@ import { NextPage } from 'next';
 import { useRouter } from 'next/dist/client/router';
 import { useState } from 'react';
 import useSWR from 'swr';
+import tw from 'twin.macro';
 import { fetcher } from '../lib/fetcher';
 import { Collection } from '../types';
 import { CollectionCard } from '../components/CollectionCard';
 import { ModiferCard } from '../components/ModiferCard';
 import { WalletStatCard } from '../components/WalletStatCard';
-import tw from 'twin.macro';
 
 export const sortOptions = [{ name: 'floor' }, { name: 'vol' }];
-const Brand = tw.h1`text-5xl tracking-wider text-indigo-400 lowercase font-brand`;
-const Sidebar = tw.section`flex flex-col col-span-1 md:col-span-2`;
-const CollectionContainer = tw.section`flex flex-col col-span-4`;
 
 const Floor: NextPage = () => {
   const router = useRouter();
@@ -75,6 +72,10 @@ const Floor: NextPage = () => {
     </main>
   );
 };
+
+const Brand = tw.h1`text-5xl tracking-wider text-indigo-400 lowercase font-brand`;
+const Sidebar = tw.section`flex flex-col col-span-1 md:col-span-2`;
+const CollectionContainer = tw.section`flex flex-col col-span-4`;
 
 
 export default Floor;
