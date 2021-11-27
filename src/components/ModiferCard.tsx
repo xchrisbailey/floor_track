@@ -1,7 +1,6 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 import { Dispatch, Fragment, SetStateAction } from 'react';
-import tw, { styled } from 'twin.macro';
 import { sortOptions } from '../pages/floor';
 import { CardBase, CardContent, CardHeader } from '../styles/Card';
 import {
@@ -36,10 +35,10 @@ export const ModiferCard = (props: {
         Modifiers
       </CardHeader>
       <CardContent>
-        <div>
-          <p className="px-2 mt-1 text-xs">sort by:</p>
+        <div className="flex items-center">
+          <p className="px-2 mt-1 w-1/2 text-sm">sort by:</p>
           <Listbox value={isSortBy} onChange={setIsSortBy}>
-            <div className="relative mt-1 mb-2">
+            <div className="relative mt-1 mb-2 w-1/2">
               <Listbox.Button className="relative py-2 pr-10 pl-3 w-full text-left bg-white rounded-lg shadow-md cursor-default sm:text-sm focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300">
                 <span className="block truncate">{isSortBy.name}</span>
                 <span className="flex absolute inset-y-0 right-0 items-center pr-2 pointer-events-none">
