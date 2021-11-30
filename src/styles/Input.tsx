@@ -8,7 +8,7 @@ const InputWidths = {
 
 export const Input = styled.input(
   ({ width }: { width: 'full' | 'auto' | 'half' }) => [
-    tw`p-2 rounded border`,
+    tw`p-2 border rounded`,
     width ? InputWidths[width] : InputWidths['auto'],
   ]
 );

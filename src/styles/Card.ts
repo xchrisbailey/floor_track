@@ -17,15 +17,15 @@ interface CardHeaderProps {
 
 // base card styles for collections and sidebar
 export const CardBase = styled.article(({ type }: CardType) => [
-  tw`bg-gray-200 rounded shadow mb-2`,
-  type === 'collection' && tw`flex overflow-hidden p-0`,
+  tw`mb-2 bg-gray-200 rounded shadow`,
+  type === 'collection' && tw`flex p-0 overflow-hidden`,
 ]);
 
 // header container for collections and sidebar
 export const CardHeader = styled.h3(({ color, type }: CardHeaderProps) => [
   tw`p-2`,
   type === 'info' && tw`tracking-wide uppercase rounded-t`,
-  type === 'collection' && tw`w-1/2 md:flex-grow items-center flex`,
+  type === 'collection' && tw`flex items-center w-1/2 md:flex-grow`,
   color === 'purple' && tw`bg-purple-400`,
   color === 'yellow' && tw`bg-yellow-400`,
 ]);
@@ -38,7 +38,7 @@ export const CardLink = styled.a(() => [
 ]);
 
 export const CardInfoTab = styled.div(({ color, position }: InfoTab) => [
-  tw`flex justify-center items-center p-2 w-1/4 md:w-1/5`,
+  tw`flex items-center justify-center w-1/4 p-2 md:w-1/5`,
 
   color === 'blue' && tw`bg-blue-300`,
 

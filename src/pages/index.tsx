@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import type { NextPage } from 'next';
-import tw from 'twin.macro';
-import { CenterContainer } from '../styles/containers';
+import { CenterContainer } from '../styles/Containers';
 import { LinkButton } from '../styles/Button';
 import { Input } from '../styles/Input';
 import { Brand } from '../styles/Typography';
@@ -29,6 +28,5 @@ const Home: NextPage = () => {
     </CenterContainer>
   );
 };
-
 
 export default Home;
