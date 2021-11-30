@@ -8,6 +8,7 @@ import { Collection } from '../types';
 import { CollectionCard } from '../components/CollectionCard';
 import { ModiferCard } from '../components/ModiferCard';
 import { WalletStatCard } from '../components/WalletStatCard';
+import { CenterContainer } from '../styles/containers';
 
 export const sortOptions = [{ name: 'floor' }, { name: 'vol' }];
 
@@ -26,23 +27,23 @@ const Floor: NextPage = () => {
 
   if (error) {
     return (
-      <main className="grid place-items-center h-screen">
+      <CenterContainer>
         <p>
           <span className="font-bold text-red-400 uppercase">error</span>:{' '}
           {error.message}
         </p>
-      </main>
+      </CenterContainer>
     );
   }
 
   if (!data) {
     return (
-      <main className="grid place-items-center h-screen">
+      <CenterContainer>
         <div
           style={{ borderTopColor: 'transparent' }}
           className="w-16 h-16 rounded-full border-4 border-blue-400 border-solid animate-spin"
         ></div>
-      </main>
+      </CenterContainer>
     );
   }
 
