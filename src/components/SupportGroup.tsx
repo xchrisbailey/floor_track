@@ -1,7 +1,7 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
-import tw, { styled } from 'twin.macro';
 import React, { Fragment, useState } from 'react';
+import { CardBase, CardContent, CardHeader } from '../styles/Card';
 
 const tipAmounts = [
   { amount: 0.01 },
@@ -15,12 +15,12 @@ const tipAmounts = [
 export const SupportGroup = () => {
   const [tipAmount, setTipAmount] = useState(tipAmounts[1]);
   return (
-    <article className="mb-2 bg-gray-200 rounded shadow">
-      <h3 className="p-2 tracking-wide uppercase bg-pink-400 rounded-t text-md">
+    <CardBase type="info">
+      <CardHeader color="pink" type="info">
         support
-      </h3>
-      <section className="p-2 border-b">
-        <p>
+      </CardHeader>
+      <CardContent>
+        <p className="mb-1">
           Any questions or feature request please email me{' '}
           <a
             href="mailto:"
@@ -29,8 +29,6 @@ export const SupportGroup = () => {
             here
           </a>
         </p>
-      </section>
-      <section className="p-2">
         <p>Help support continued develepment by sending a tip:</p>
         <div className="flex mt-1 mb-2">
           <Listbox value={tipAmount} onChange={setTipAmount}>
@@ -102,8 +100,8 @@ export const SupportGroup = () => {
             send
           </a>
         </div>
-      </section>
-    </article>
+      </CardContent>
+    </CardBase>
   );
 
 };
