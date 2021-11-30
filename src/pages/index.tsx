@@ -3,6 +3,9 @@ import Link from 'next/link';
 import type { NextPage } from 'next';
 import tw from 'twin.macro';
 import { CenterContainer } from '../styles/containers';
+import { LinkButton } from '../styles/Button';
+import { Input } from '../styles/Input';
+import { Brand } from '../styles/Typography';
 
 const Home: NextPage = () => {
   const [wallet, setWallet] = useState('');
@@ -10,25 +13,22 @@ const Home: NextPage = () => {
   return (
     <CenterContainer>
       <div className="flex flex-col">
-        <Title>floor track</Title>
+        <Brand>floor track</Brand>
         <div className="flex">
           <Input
+            width="auto"
             type="text"
             placeholder="wallet address"
             onChange={(e) => setWallet(e.target.value)}
           />
           <Link href={`/floor?wallet=${wallet}`} passHref>
-            <AButton>view</AButton>
+            <LinkButton color="blue">view</LinkButton>
           </Link>
         </div>
       </div>
     </CenterContainer>
   );
 };
-
-const Input = tw.input`p-2 rounded border`;
-const Title = tw.h2`mb-2 text-5xl font-brand tracking-wide text-indigo-400 z-50`;
-const AButton = tw.a`p-2 ml-1 bg-blue-300 rounded shadow hover:bg-blue-400 cursor-pointer`;
 
 
 export default Home;

@@ -9,6 +9,7 @@ import { CollectionCard } from '../components/CollectionCard';
 import { ModiferCard } from '../components/ModiferCard';
 import { WalletStatCard } from '../components/WalletStatCard';
 import { CenterContainer } from '../styles/containers';
+import { Brand } from '../styles/Typography';
 
 export const sortOptions = [{ name: 'floor' }, { name: 'vol' }];
 
@@ -74,7 +75,6 @@ const Floor: NextPage = () => {
   );
 };
 
-const Brand = tw.h1`text-5xl tracking-wider text-indigo-400 lowercase font-brand`;
 const Sidebar = tw.section`flex flex-col col-span-1 md:col-span-2`;
 const CollectionContainer = tw.section`flex flex-col col-span-4`;
 
