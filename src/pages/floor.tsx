@@ -10,6 +10,7 @@ import { ModiferCard } from '../components/ModiferCard';
 import { WalletStatCard } from '../components/WalletStatCard';
 import { CenterContainer } from '../styles/Containers';
 import { Brand } from '../styles/Typography';
+import { SupportCard } from '../components/SupportCard';
 
 export const sortOptions = [{ name: 'floor' }, { name: 'vol' }];
 
@@ -69,6 +70,7 @@ const Floor: NextPage = () => {
             setIsSmallHidden={setIsSmallHidden}
             setIsSortBy={setIsSortBy}
           />
+          <SupportCard />
         </Sidebar>
       </div>
     </main>

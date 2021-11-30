@@ -17,9 +17,9 @@ type CardHeader = {
 
 // info card header colors
 const headerColors = {
-  pink: tw`bg-pink-500`,
-  yellow: tw`bg-yellow-500`,
-  purple: tw`bg-purple-500`,
+  pink: tw`bg-gradient-to-r from-pink-400 to-pink-300`,
+  yellow: tw`bg-gradient-to-r from-yellow-400 to-yellow-300`,
+  purple: tw`bg-gradient-to-r from-purple-400 to-purple-300`,
   default: tw`bg-gray-100`,
 };
 
