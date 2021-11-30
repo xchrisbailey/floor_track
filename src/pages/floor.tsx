@@ -42,14 +42,14 @@ const Floor: NextPage = () => {
       <CenterContainer>
         <div
           style={{ borderTopColor: 'transparent' }}
-          className="w-16 h-16 border-4 border-blue-400 border-solid rounded-full animate-spin"
+          className="w-16 h-16 rounded-full border-4 border-blue-400 border-solid animate-spin"
         ></div>
       </CenterContainer>
     );
   }
 
   return (
-    <main className="w-full p-1 md:container md:p-0 md:mx-auto">
+    <main className="p-1 w-full md:container md:p-0 md:mx-auto">
       <header className="mt-2 mb-3">
         <Brand>FLOOR TRACK</Brand>
       </header>
@@ -77,5 +77,6 @@ const Floor: NextPage = () => {
 
 const Sidebar = tw.section`flex flex-col col-span-1 md:col-span-2`;
 const CollectionContainer = tw.section`flex flex-col col-span-4`;
+
 
 export default Floor;
