@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.link {
+  @apply border-b-0 bg-clip-text bg-gradient-to-br from-indigo-600 to-pink-600 border-indigo-600;
+}
+
+.link:hover {
+  @apply border-b;
+}
