@@ -1,6 +1,4 @@
 import React from 'react';
-import Image from 'next/image';
-import tw, { styled } from 'twin.macro';
 import { Collection } from '../types';
 import {
   CardBase,
@@ -9,6 +7,7 @@ import {
   CardInfoTab,
   CardLink,
 } from '../styles/Card';
+import { Hyper } from '../styles/Typography';
 
 interface Props {
   collection: Collection;
@@ -26,13 +25,14 @@ export const CollectionCard = ({ collection }: Props) => {
             width={30}
           />
         )}
-        <CardLink
+        <Hyper
+          className="px-2"
           href={`https://opensea.io/collection/${collection.slug}`}
           target="_blank"
           rel="noreferrer"
         >
           {collection.name}
-        </CardLink>{' '}
+        </Hyper>{' '}
         ({collection.owned_asset_count})
       </CardHeader>
       <CardInfoTab position="left" color="blue">
@@ -43,4 +43,5 @@ export const CollectionCard = ({ collection }: Props) => {
       </CardInfoTab>
     </CardBase>
   );
+
 };

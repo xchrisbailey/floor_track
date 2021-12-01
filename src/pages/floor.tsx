@@ -8,6 +8,9 @@ import { Collection } from '../types';
 import { CollectionCard } from '../components/CollectionCard';
 import { ModiferCard } from '../components/ModiferCard';
 import { WalletStatCard } from '../components/WalletStatCard';
+import { CenterContainer } from '../styles/Containers';
+import { Brand } from '../styles/Typography';
+import { SupportCard } from '../components/SupportCard';
 
 export const sortOptions = [{ name: 'floor' }, { name: 'vol' }];
 
@@ -26,23 +29,23 @@ const Floor: NextPage = () => {
 
   if (error) {
     return (
-      <main className="grid place-items-center h-screen">
+      <CenterContainer>
         <p>
           <span className="font-bold text-red-400 uppercase">error</span>:{' '}
           {error.message}
         </p>
-      </main>
+      </CenterContainer>
     );
   }
 
   if (!data) {
     return (
-      <main className="grid place-items-center h-screen">
+      <CenterContainer>
         <div
           style={{ borderTopColor: 'transparent' }}
           className="w-16 h-16 rounded-full border-4 border-blue-400 border-solid animate-spin"
         ></div>
-      </main>
+      </CenterContainer>
     );
   }
 
@@ -67,13 +70,13 @@ const Floor: NextPage = () => {
             setIsSmallHidden={setIsSmallHidden}
             setIsSortBy={setIsSortBy}
           />
+          <SupportCard />
         </Sidebar>
       </div>
     </main>
   );
 };
 
-const Brand = tw.h1`text-5xl tracking-wider text-indigo-400 lowercase font-brand`;
 const Sidebar = tw.section`flex flex-col col-span-1 md:col-span-2`;
 const CollectionContainer = tw.section`flex flex-col col-span-4`;
 
