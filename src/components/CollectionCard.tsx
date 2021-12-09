@@ -43,7 +43,7 @@ export const CollectionCard = ({ collection }: Props) => {
         {!statsOpen && (
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="pt-1 mx-auto w-4 h-4 cursor-pointer"
+            className="pt-1 mx-auto w-4 h-4 cursor-pointer hover:animate-bounce"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -52,7 +52,7 @@ export const CollectionCard = ({ collection }: Props) => {
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              strokeWidth={2}
+              strokeWidth={3}
               d="M19 9l-7 7-7-7"
             />
           </svg>
@@ -87,51 +87,41 @@ export const CollectionCard = ({ collection }: Props) => {
                 </Hyper>
               </div>
               <div className="grid grid-cols-2 gap-2">
-                <div className="flex-row bg-white rounded">
-                  <h3 className="p-2 tracking-wide bg-purple-300 rounded-t">
+                <div className="flex-row p-2">
+                  <h3 className="w-full font-bold tracking-wide rounded-t border-b">
                     24 hour stats
                   </h3>
-                  <div className="p-2">
-                    <p className="flex justify-between py-2 w-full">
-                      one day volume:{' '}
-                      <span>
-                        {collection.stats.one_day_volume?.toFixed(2)}Ξ
-                      </span>
-                    </p>
-                    <p className="flex justify-between py-2">
-                      one day sales:{' '}
-                      <span>{collection.stats.one_day_sales?.toFixed(0)}</span>
-                    </p>
-                    <p className="flex justify-between py-2">
-                      average price:{' '}
-                      <span>
-                        {collection.stats.one_day_average_price?.toFixed(2)}Ξ
-                      </span>
-                    </p>
-                  </div>
+                  <p className="flex justify-between w-full">
+                    one day volume:{' '}
+                    <span>{collection.stats.one_day_volume?.toFixed(2)}Ξ</span>
+                  </p>
+                  <p className="flex justify-between">
+                    one day sales:{' '}
+                    <span>{collection.stats.one_day_sales?.toFixed(0)}</span>
+                  </p>
+                  <p className="flex justify-between">
+                    average price:{' '}
+                    <span>
+                      {collection.stats.one_day_average_price?.toFixed(2)}Ξ
+                    </span>
+                  </p>
                 </div>
-                <div className="flex-row bg-white rounded">
-                  <h3 className="p-2 tracking-wide bg-yellow-300 rounded-t">
+                <div className="flex-row p-2">
+                  <h3 className="font-bold tracking-wide border-b">
                     user stats
                   </h3>
-                  <div className="p-2">
-                    <p className="flex justify-between w-full">
-                      total owned: <span>{collection.owned_asset_count}</span>{' '}
-                    </p>
-                  </div>
+                  <p className="flex justify-between w-full">
+                    total owned: <span>{collection.owned_asset_count}</span>{' '}
+                  </p>
                 </div>
-                <div className="flex-row bg-white rounded">
-                  <h3 className="p-2 tracking-wide bg-blue-300 rounded-t">
-                    collection info
-                  </h3>
-                  <div className="p-2">
-                    <p className="flex justify-between w-full">
-                      total supply: <span>{collection.stats.total_supply}</span>
-                    </p>
-                    <p className="flex justify-between w-full">
-                      owner count: <span>{collection.stats.num_owners}</span>{' '}
-                    </p>
-                  </div>
+                <div className="flex-row p-2">
+                  <h3 className="tracking-wide border-b">collection info</h3>
+                  <p className="flex justify-between w-full">
+                    total supply: <span>{collection.stats.total_supply}</span>
+                  </p>
+                  <p className="flex justify-between w-full">
+                    owner count: <span>{collection.stats.num_owners}</span>{' '}
+                  </p>
                 </div>
               </div>
             </div>
