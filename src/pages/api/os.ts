@@ -28,7 +28,8 @@ export default async function handler(
   collections = await Promise.all(
     collections.map(async (collection) => {
       const res = await fetch(
-        `https://api.opensea.io/api/v1/collection/${collection.slug}/stats`
+        `https://api.opensea.io/api/v1/collection/${collection.slug}/stats`,
+        config
       );
       const stats = await res.json();
 
