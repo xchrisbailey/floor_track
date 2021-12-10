@@ -16,10 +16,10 @@ export default async function handler(
     const { wallet, sort, vol, small } = req.query;
 
     if (!wallet) throw new Error('Must provide wallet');
-    await setTimeout(70);
-    const { data } = await axios.get(
+    const { data } = await axios(
       `https://api.opensea.io/api/v1/collections?asset_owner=${wallet}&offset=0&limit=300`,
       {
+        method: 'GET',
         headers: { 'X-API-KEY': `${process.env.OS_API_KEY ?? null}` },
       }
     );
@@ -31,6 +31,7 @@ export default async function handler(
         const { data }: { data: Collection } = await axios.get(
           `https://api.opensea.io/api/v1/collection/${collection.slug}/stats`,
           {
+            method: 'GET',
             headers: { 'X-API-KEY': `${process.env.OS_API_KEY ?? null}` },
           }
         );
@@ -66,9 +67,11 @@ export default async function handler(
 
     res.status(200).json({ collections: collections });
   } catch (err: any) {
-    if (err.data.detail) {
+    if (err.data?.detail) {
+      console.error(err);
       throw new Error(err.data.detail);
     } else {
+      console.error(err);
       throw new Error(err.message);
     }
   }
