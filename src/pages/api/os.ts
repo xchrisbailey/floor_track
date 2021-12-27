@@ -15,7 +15,8 @@ export default async function handler(
   try {
     const { wallet, sort, vol, small } = req.query;
 
-    if (!wallet) throw new Error('Must provide wallet');
+    if (!wallet || wallet === undefined) throw new Error('Must provide wallet');
+
     const { data } = await axios(
       `https://api.opensea.io/api/v1/collections?asset_owner=${wallet}&offset=0&limit=300`,
       {
@@ -26,7 +27,7 @@ export default async function handler(
 
     let collections: Collection[] = await Promise.all(
       data.map(async (collection: Collection) => {
-        await setTimeout(70);
+        await setTimeout(1000);
 
         const { data }: { data: Collection } = await axios.get(
           `https://api.opensea.io/api/v1/collection/${collection.slug}/stats`,
@@ -42,6 +43,8 @@ export default async function handler(
         };
       })
     );
+
+    if (!collections) throw new Error('No collections found');
 
     if (small === 'true') {
       collections = collections.filter(
