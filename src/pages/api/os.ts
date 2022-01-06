@@ -25,24 +25,23 @@ export default async function handler(
       }
     );
 
-    let collections: Collection[] = await Promise.all(
-      data.map(async (collection: Collection) => {
-        await setTimeout(1000);
+    let collections: Collection[] = [];
 
-        const { data }: { data: Collection } = await axios.get(
-          `https://api.opensea.io/api/v1/collection/${collection.slug}/stats`,
-          {
-            method: 'GET',
-            headers: { 'X-API-KEY': `${process.env.OS_API_KEY ?? null}` },
-          }
-        );
+    for (const collection of data) {
+      await setTimeout(500);
+      const { data } = await axios.get(
+        `https://api.opensea.io/api/v1/collection/${collection.slug}/stats`,
+        {
+          method: 'GET',
+          headers: { 'X-API-KEY': `${process.env.OS_API_KEY ?? null}` },
+        }
+      );
 
-        return {
-          ...collection,
-          stats: data,
-        };
-      })
-    );
+      collections.push({
+        ...collection.primary_asset_contracts[0],
+        stats: data.stats,
+      });
+    }
 
     if (!collections) throw new Error('No collections found');
 
