@@ -1,4 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
+import axios from 'axios';
+import { setTimeout } from 'timers/promises';
+
 import { Collection } from '../../types';
 
 interface Data {
@@ -9,54 +12,69 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  const { wallet, sort, vol, small } = req.query;
+  try {
+    const { wallet, sort, vol, small } = req.query;
 
-  if (!wallet) throw new Error('Must provide wallet');
+    if (!wallet || wallet === undefined) throw new Error('Must provide wallet');
 
-  const config: RequestInit = {
-    method: 'GET',
-    headers: { 'X-API-KEY': `${process.env.OS_API_KEY}` },
-  };
+    const { data } = await axios(
+      `https://api.opensea.io/api/v1/collections?asset_owner=${wallet}&offset=0&limit=300`,
+      {
+        method: 'GET',
+        headers: { 'X-API-KEY': `${process.env.OS_API_KEY ?? null}` },
+      }
+    );
 
-  const collectionResponse = await fetch(
-    `https://api.opensea.io/api/v1/collections?asset_owner=${wallet}&offset=0&limit=300`,
-    config
-  );
+    let collections: Collection[] = [];
 
-  let collections: Collection[] = await collectionResponse.json();
-
-  collections = await Promise.all(
-    collections.map(async (collection) => {
-      const res = await fetch(
+    for (const collection of data) {
+      await setTimeout(150);
+      const { data } = await axios.get(
         `https://api.opensea.io/api/v1/collection/${collection.slug}/stats`,
-        config
+        {
+          method: 'GET',
+          headers: { 'X-API-KEY': `${process.env.OS_API_KEY ?? null}` },
+        }
       );
-      const stats = await res.json();
 
-      return {
+      collections.push({
         ...collection,
-        stats: { ...stats.stats },
-      };
-    })
-  );
+        stats: data.stats,
+      });
+    }
 
-  if (small === 'true') {
-    collections = collections.filter((data) => data.stats.floor_price >= 0.01);
+    if (!collections) throw new Error('No collections found');
+
+    if (small === 'true') {
+      collections = collections.filter(
+        (data) => data.stats.floor_price >= 0.01
+      );
+    }
+
+    if (vol === 'true') {
+      collections = collections.filter(
+        (data) => data.stats.one_day_volume !== 0
+      );
+    }
+
+    if (sort === 'floor') {
+      collections = collections.sort((a, b) =>
+        a.stats.floor_price < b.stats.floor_price ? 1 : -1
+      );
+    } else {
+      collections = collections.sort((a, b) =>
+        a.stats.one_day_volume < b.stats.one_day_volume ? 1 : -1
+      );
+    }
+
+    res.status(200).json({ collections: collections });
+  } catch (err: any) {
+    if (err.data?.detail) {
+      console.error(err);
+      throw new Error(err.data.detail);
+    } else {
+      console.error(err);
+      throw new Error(err.message);
+    }
   }
-
-  if (vol === 'true') {
-    collections = collections.filter((data) => data.stats.one_day_volume !== 0);
-  }
-
-  if (sort === 'floor') {
-    collections = collections.sort((a, b) =>
-      a.stats.floor_price < b.stats.floor_price ? 1 : -1
-    );
-  } else {
-    collections = collections.sort((a, b) =>
-      a.stats.one_day_volume < b.stats.one_day_volume ? 1 : -1
-    );
-  }
-
-  res.status(200).json({ collections: collections });
 }

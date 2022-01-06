@@ -38,7 +38,7 @@ const infoTabColors = {
 // base card styles for collections and sidebar
 export const CardBase = styled.article(({ type }: Card) => [
   tw`mb-2 bg-gray-100 rounded shadow`,
-  type === 'collection' && tw`flex p-0 overflow-hidden`,
+  type === 'collection' && tw`flex p-0 overflow-hidden mb-0 z-10`,
 ]);
 
 // header container for collections and sidebar

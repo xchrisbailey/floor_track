@@ -10,6 +10,7 @@ export const WalletStatCard = ({
 }: {
   collections: Collection[];
 }) => {
+  console.log(collections);
   return (
     <CardBase type="info">
       <CardHeader type="info" color="purple">
