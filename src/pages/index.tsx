@@ -13,20 +13,17 @@ const Home: NextPage = () => {
     <CenterContainer>
       <div className="flex flex-col">
         <Brand>floor track</Brand>
-        <p>currently rugged by OS api limits</p>
-        {
-          //   <div className="flex">
-          // <Input
-          // width="auto"
-          // type="text"
-          // placeholder="wallet address"
-          // onChange={(e) => setWallet(e.target.value)}
-          // />
-          // <Link href={`/floor?wallet=${wallet}`} passHref>
-          // <LinkButton color="blue">view</LinkButton>
-          // </Link>
-          // </div>
-        }
+        <div className="flex">
+          <Input
+            width="auto"
+            type="text"
+            placeholder="wallet address"
+            onChange={(e) => setWallet(e.target.value)}
+          />
+          <Link href={`/floor?wallet=${wallet}`} passHref>
+            <LinkButton color="blue">view</LinkButton>
+          </Link>
+        </div>
       </div>
     </CenterContainer>
   );

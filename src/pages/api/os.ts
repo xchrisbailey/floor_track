@@ -28,7 +28,7 @@ export default async function handler(
     let collections: Collection[] = [];
 
     for (const collection of data) {
-      await setTimeout(500);
+      await setTimeout(150);
       const { data } = await axios.get(
         `https://api.opensea.io/api/v1/collection/${collection.slug}/stats`,
         {
@@ -38,7 +38,7 @@ export default async function handler(
       );
 
       collections.push({
-        ...collection.primary_asset_contracts[0],
+        ...collection,
         stats: data.stats,
       });
     }
