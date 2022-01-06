@@ -1,9 +1,8 @@
 module.exports = {
-  purge: [
+  content: [
     './src/pages/**/*.{js,ts,tsx,jsx}',
     './src/components/**/*.{js,ts,tsx,jsx}',
   ],
-  darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
     fontFamily: {
@@ -11,7 +10,9 @@ module.exports = {
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      animation: ['hover', 'focus'],
+    },
   },
   plugins: [],
 };
