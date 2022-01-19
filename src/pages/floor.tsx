@@ -1,9 +1,7 @@
-import { NextPage } from 'next';
-import { useRouter } from 'next/dist/client/router';
+import { NextPage, NextPageContext } from 'next';
+import { setTimeout } from 'timers/promises';
 import { useState } from 'react';
-import useSWR from 'swr';
 import tw from 'twin.macro';
-import { fetcher } from '../lib/fetcher';
 import { Collection } from '../types';
 import { CollectionCard } from '../components/CollectionCard';
 import { ModiferCard } from '../components/ModiferCard';
@@ -14,25 +12,23 @@ import { SupportCard } from '../components/SupportCard';
 
 export const sortOptions = [{ name: 'floor' }, { name: 'vol' }];
 
-const Floor: NextPage = () => {
-  const router = useRouter();
-  const { wallet } = router.query;
+interface Props {
+  data: Collection[];
+}
 
+const Floor: NextPage<Props> = (props) => {
   const [isSortBy, setIsSortBy] = useState(sortOptions[0]);
   const [isSmallHidden, setIsSmallHidden] = useState(false);
   const [isSmVolHidden, setIsSmVolHidden] = useState(false);
 
-  const { data, error } = useSWR<{ collections: Collection[] }>(
-    `/api/os?wallet=${wallet}&sort=${isSortBy.name}&vol=${isSmVolHidden}&small=${isSmallHidden}`,
-    fetcher
-  );
+  const data = props.data;
 
-  if (error) {
+  if (!data) {
     return (
       <CenterContainer>
         <p>
           <span className="font-bold text-red-400 uppercase">error</span>:{' '}
-          {error.message}
+          something went wrong
         </p>
       </CenterContainer>
     );
@@ -56,12 +52,12 @@ const Floor: NextPage = () => {
       </header>
       <div className="grid grid-cols-1 gap-2 md:grid-cols-6">
         <CollectionContainer>
-          {data.collections.map((collection: Collection) => (
+          {data.map((collection: Collection) => (
             <CollectionCard collection={collection} key={collection.slug} />
           ))}
         </CollectionContainer>
         <Sidebar>
-          <WalletStatCard collections={data.collections} />
+          <WalletStatCard collections={data} />
           <ModiferCard
             isSmVolHidden={isSmVolHidden}
             isSmallHidden={isSmallHidden}
@@ -77,8 +73,40 @@ const Floor: NextPage = () => {
   );
 };
 
+export async function getServerSideProps(context: NextPageContext) {
+  const wallet: string = context.query.wallet as string;
+
+  const res = await fetch(
+    `https://api.opensea.io/api/v1/collections?asset_owner=${wallet}&offset=0&limit=300`
+  );
+  const data = await res.json();
+
+  const collections: Collection[] = [];
+
+  for (const collection of data) {
+    await setTimeout(1000);
+    const res = await fetch(
+      `https://api.opensea.io/api/v1/collection/${collection.slug}/stats`,
+      {
+        method: 'GET',
+        headers: { 'X-API-KEY': `${process.env.OS_API_KEY ?? null}` },
+      }
+    );
+
+    const data = await res.json();
+
+    collections.push({
+      ...collection,
+      stats: data.stats,
+    });
+  }
+
+  return {
+    props: { data: collections }, // will be passed to the page component as props
+  };
+}
+
 const Sidebar = tw.section`flex flex-col col-span-1 md:col-span-2`;
 const CollectionContainer = tw.section`flex flex-col col-span-4`;
-
 
 export default Floor;
